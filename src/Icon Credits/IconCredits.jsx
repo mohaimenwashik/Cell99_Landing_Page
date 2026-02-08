@@ -1,6 +1,6 @@
 import React from "react";
-import LegalHeader from "../components/LegalHeader";
-import LegalFooter from "../components/LegalFooter";
+import SiteHeader from "../components/SiteHeader";
+import SiteFooter from "../components/SiteFooter";
 import brokenScreenIcon from "../assets/broken-screen.png";
 import brokenBackIcon from "../assets/broken-back.png";
 import speakerIcon from "../assets/phone-speaker.png";
@@ -100,7 +100,7 @@ function IconCredits() {
         Skip to content
       </a>
 
-      <LegalHeader />
+      <SiteHeader variant="legal" />
 
       <main id="main" className="legal-page">
         <div className="container">
@@ -129,7 +129,7 @@ function IconCredits() {
           </div>
         </div>
       </main>
-      <LegalFooter />
+      <SiteFooter />
     </div>
   );
 }

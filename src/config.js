@@ -18,16 +18,16 @@ export const businessInfo = {
   name: "Cell99",
   
   // Email contact
-  email: "cell99org@gmail.com",
-  emailHref: "mailto:cell99org@gmail.com",
+  email: "cell99elliot@gmail.com",
+  emailHref: "mailto:cell99elliot@gmail.com",
   
   // Primary location (Tempe)
   tempe: {
-    address: "1700 E Elliot Rd STE 4, Tempe, AZ 85284",
-    phoneDisplay: "+1 (917)-385-5374",
-    phoneHref: "tel:+19173855374",
+    address: "1700 E Elliot Rd STE 3, Tempe, AZ 85284",
+    phoneDisplay: "+1 (602)-814-4334",
+    phoneHref: "tel:+16028144334",
     city: "Tempe, AZ",
-    mapLink: "https://www.google.com/maps?q=1700+E+Elliot+Rd+STE+4+Tempe+AZ+85284"
+    mapLink: "https://www.google.com/maps?ll=33.349524,-111.913772&z=15&t=m&hl=en&gl=US&mapclient=embed&cid=11293861067453886929"
   },
   
   // Secondary location (Glendale) - used in legal documents

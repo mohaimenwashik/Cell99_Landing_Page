@@ -11,6 +11,8 @@ import customerServiceIcon from "./assets/customer-service.png";
 import customerRetentionIcon from "./assets/customer-retention.png";
 import lowPriceIcon from "./assets/low-price.png";
 import localExpertIcon from "./assets/local-expert.png";
+import SiteHeader from "./components/SiteHeader";
+import SiteFooter from "./components/SiteFooter";
 
 // ============================================================================
 // BUSINESS DATA - Store information, services, and page content
@@ -28,6 +30,12 @@ const store = {
   mapLink: businessInfo.tempe.mapLink,
   email: businessInfo.email
 };
+const googleStaticMapsKey = import.meta.env.VITE_GOOGLE_STATIC_MAPS_KEY;
+const mapEmbedSrc = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(
+  store.address
+)}&zoom=16&size=900x520&maptype=roadmap&markers=color:red%7C${encodeURIComponent(
+  store.address
+)}&key=${googleStaticMapsKey}`;
 
 // Hero section badges - Key highlights displayed below the main heading
 const heroBadges = [
@@ -199,31 +207,7 @@ function App() {
         Skip to content
       </a>
 
-      {/* HEADER SECTION - Navigation bar with logo and buttons */}
-      <header className="site-header">
-        <div className="container header-content">
-          {/* Company logo and branding */}
-          <div className="logo">
-            <span className="logo-mark">99</span>
-            <span className="logo-text">Cell99</span>
-          </div>
-          {/* Navigation links to page sections */}
-          <nav className="nav-links">
-            <a href="#services">Services</a>
-            <a href="#repair-services">Repairs</a>
-            <a href="#visit">Visit</a>
-          </nav>
-          {/* Call-to-action buttons in header */}
-          <div className="header-cta">
-            <a className="btn btn-outline" href={store.mapLink} target="_blank" rel="noreferrer">
-              Get Directions
-            </a>
-            <a className="btn btn-solid" href={store.phoneHref}>
-              Call to Book
-            </a>
-          </div>
-        </div>
-      </header>
+      <SiteHeader />
 
       {/* MAIN CONTENT AREA - All page sections */}
       <main id="main">
@@ -237,7 +221,7 @@ function App() {
             <div className="hero-copy">
               <p className="eyebrow">Accessories • Repairs • Walk-ins • Quick Service</p>
               <h1>
-                Highest rated phone accessories and repair shop in {store.city}
+                Highest rated phone repairs and accessories shop in {store.city}
               </h1>
               <p className="lead">
                 Cell99 keeps you connected with accessories for old to latest
@@ -375,6 +359,10 @@ function App() {
                   <p>{store.phoneDisplay}</p>
                 </div>
                 <div>
+                  <h4>Email</h4>
+                  <p>{store.email}</p>
+                </div>
+                <div>
                   <h4>Hours</h4>
                   <div className="hours-list">
                     <p><strong> Mon: </strong> {store.hours.monday}</p>
@@ -406,7 +394,24 @@ function App() {
                 Call to reserve a time, or drop in for walk-in service. We carry
                 accessories for most devices and can help with a wide range of
                 repairs.
-              </p>
+              </p>              
+              <h3>For Walk-ins</h3>
+              <div className="visit-map-wrap">
+                <a
+                  className="visit-map"
+                  href={store.mapLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open Cell99 location in Google Maps"
+                >
+                  <img
+                    src={mapEmbedSrc}
+                    alt="Map showing Cell99 location in Tempe, Arizona."
+                    loading="lazy"
+                  />
+                </a>
+                <p className="map-attribution">Map data © Google</p>
+              </div>              
               <div className="panel-tags">
                 <span>Appointments by call</span>
                 <span>Walk-ins welcome</span>
@@ -436,47 +441,7 @@ function App() {
         </section>
       </main>
 
-      {/* FOOTER SECTION - Company info and additional links */}
-      <footer className="site-footer">
-        <div className="container footer-grid">
-          <div>
-            <div className="logo footer-logo">
-              <span className="logo-mark">99</span>
-              <span className="logo-text">Cell99</span>
-            </div>
-            <p>Phone accessories and repair services in Tempe, AZ.</p>
-          </div>
-          <div>
-            <h4>Visit</h4>
-            <p>{store.address}</p>
-          </div>
-          <div>
-            <h4>Legal</h4>
-            <p>
-              <a href="/privacy-policy.html">Privacy Policy</a>
-            </p>
-            <p>
-              <a href="/terms-and-conditions.html">Terms and Conditions</a>
-            </p>
-            <p>
-              <a href="/icon-credits.html">Icon Credits</a>
-            </p>
-          </div>
-          <div>
-            <h4>Contact</h4>
-            <p>
-              <a href={store.phoneHref}>{store.phoneDisplay}</a>
-            </p>
-            <p>
-              <a href={businessInfo.emailHref} target="_blank" rel="noreferrer">{businessInfo.email}</a>
-            </p>
-            <p className="fine-print">
-              © {businessInfo.copyrightYear} | All Rights Reserved | Cell99 is not affiliated with
-              Apple, Samsung, Google, or any other brand mentioned.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
 
       {/* Inject JSON-LD schema for SEO - Helps search engines understand the page */}
       <script

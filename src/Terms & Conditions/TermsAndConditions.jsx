@@ -1,7 +1,7 @@
 import React from "react";
 import { businessInfo } from "../config";
-import LegalHeader from "../components/LegalHeader";
-import LegalFooter from "../components/LegalFooter";
+import SiteHeader from "../components/SiteHeader";
+import SiteFooter from "../components/SiteFooter";
 
 // Terms and Conditions Component - Displays Cell99's service terms
 function TermsAndConditions() {
@@ -13,7 +13,7 @@ function TermsAndConditions() {
       </a>
 
       {/* Header */}
-      <LegalHeader />
+      <SiteHeader variant="legal" />
 
       <main id="main" className="legal-page">
         <div className="container">
@@ -176,7 +176,7 @@ function TermsAndConditions() {
       </main>
 
       {/* Footer */}
-      <LegalFooter />
+      <SiteFooter />
     </div>
   );
 }
