@@ -39,7 +39,7 @@ const mapEmbedSrc = `https://maps.googleapis.com/maps/api/staticmap?center=${enc
 
 // Hero section badges - Key highlights displayed below the main heading
 const heroBadges = [
-  "Quick Cell Phone Repairs",
+  "Quick Cell Phone Services",
   "Accessories for all brands and models",
   "Walk-ins welcome", 
   "Appointments by call"
@@ -49,19 +49,19 @@ const heroBadges = [
 // Maps over this array to create service cards dynamically
 const services = [
   {
-    title: "Phone Repairs",
+    title: "Broken Phone?",
     detail:
-      "Cracked screens, battery issues, charging ports, and more. Call for availability and quotes."
+      "Cracked screens, battery issues, charging ports, and more are fixed with ease. Call for availability and quotes."
   },
   {
-    title: "Accessories",
+    title: "Need new case & accessories?",
     detail:
-      "Cases, screen protectors, chargers, cables, and everyday essentials for most devices."
+      "Variety of cases, screen protectors, chargers, cables, and everyday essentials for most devices."
   },
   {
-    title: "Device Help",
+    title: "Device Running Slow?",
     detail:
-      "Setup assistance, data transfers, and troubleshooting for phones available in the US."
+      "Setup assistance, data transfers, software cleanups and troubleshooting for phones available in the US."
   }
 ];
 
@@ -86,12 +86,12 @@ const repairServices = [
   {
     icon: cameraIcon,
     title: "Camera",
-    detail: "Camera lens and sensor repairs for all phones."
+    detail: "Camera lens and sensor calibrations for all phones."
   },
   {
     icon: chargingPortIcon,
     title: "Charging Port",
-    detail: "Charging port repairs and replacements."
+    detail: "Charging port calibration and replacements."
   },
   {
     icon: batteryIcon,
@@ -139,7 +139,7 @@ const faqs = [
   },
   {
     q: "What phones do you service?",
-    a: "We service iPhone, Samsung, Google, and many other phones sold in the US."
+    a: "We service all kind of brands and many other phones sold in the US."
   },
   {
     q: "Do you sell accessories for older models?",
@@ -219,13 +219,13 @@ function App() {
           <div className="container hero-grid">
             {/* Left column: headline and description */}
             <div className="hero-copy">
-              <p className="eyebrow">Accessories • Repairs • Walk-ins • Quick Service</p>
+              <p className="eyebrow">Accessories • Walk-ins • Quick Service</p>
               <h1>
-                Highest rated phone repairs and accessories shop in {store.city}
+                Highest rated in {store.city}
               </h1>
               <p className="lead">
                 Cell99 keeps you connected with accessories for old to latest
-                models, plus trusted repair help. Call to book an appointment, or
+                models, plus trusted solution for your phone. Call to book an appointment, or
                 walk in when you’re ready.
               </p>
               <div className="hero-cta">
@@ -233,7 +233,7 @@ function App() {
                   Call to Book
                 </a>
                 <a className="btn btn-ghost" href={store.mapLink} target="_blank" rel="noreferrer">
-                  Visit Our Store
+                  Direction 📍
                 </a>
               </div>
               {/* Display highlight badges dynamically from heroBadges array */}
@@ -252,6 +252,19 @@ function App() {
                 <span className="card-label">Visit Cell99</span>
                 <h2>{store.address}</h2>
                 <p className="card-sub">Open 7 Days a Week</p>
+                <a
+                  className="hero-mini-map"
+                  href={store.mapLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open Cell99 location in Google Maps"
+                >
+                  <img
+                    src={mapEmbedSrc}
+                    alt="Map showing Cell99 location in Tempe, Arizona."
+                    loading="lazy"
+                  />
+                </a>
               </div>
               {/* Visual divider */}
               <div className="card-divider"></div>
@@ -277,7 +290,7 @@ function App() {
             <div className="section-header">
               <h2>Everything your phone needs</h2>
               <p>
-                From repairs to accessories, we help keep your device protected
+                From accessories to fixes, we help keep your device protected
                 and running smoothly.
               </p>
             </div>
@@ -297,7 +310,7 @@ function App() {
         <section id="repair-services" className="section alt">
           <div className="container">
             <div className="section-header">
-              <h2>Our Repair Services Include</h2>
+              <h2>Our Services Include</h2>
               <p>We fix a wide range of phone issues with expert care and fast turnaround.</p>
             </div>
             {/* Display repair services as icon cards */}
@@ -320,7 +333,7 @@ function App() {
           <div className="container">
             <div className="section-header">
               <h2>Why Our Customers Choose Us</h2>
-              <p>Here's what sets Cell99 apart from other repair shops.</p>
+              <p>Here's what sets Cell99 apart from other shops.</p>
             </div>
             {/* Display reasons as feature cards with icons */}
             <div className="reasons-grid">
@@ -345,7 +358,7 @@ function App() {
               <div className="section-header">
                 <h2>Visit the store</h2>
                 <p>
-                  Stop by Cell99 in Tempe for accessories and repair help. Call
+                  Stop by Cell99 in Tempe for accessories and help. Call
                   ahead to book an appointment.
                 </p>
               </div>
@@ -393,7 +406,7 @@ function App() {
               <p>
                 Call to reserve a time, or drop in for walk-in service. We carry
                 accessories for most devices and can help with a wide range of
-                repairs.
+                services.
               </p>              
               <h3>For Walk-ins</h3>
               <div className="visit-map-wrap">
@@ -410,7 +423,6 @@ function App() {
                     loading="lazy"
                   />
                 </a>
-                <p className="map-attribution">Map data © Google</p>
               </div>              
               <div className="panel-tags">
                 <span>Appointments by call</span>

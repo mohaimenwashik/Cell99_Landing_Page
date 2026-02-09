@@ -8,7 +8,7 @@ function SiteFooter() {
       <div className="container footer-grid">
         <div>
           <img src={cell99Logo} alt="Cell99" className="logo footer-logo" />
-          <p>Phone accessories and repair services in Tempe, AZ.</p>
+          <p>Phone accessories and services in Tempe, AZ.</p>
         </div>
         <div>
           <h4>Visit</h4>

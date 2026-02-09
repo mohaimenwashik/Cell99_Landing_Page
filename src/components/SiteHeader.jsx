@@ -17,8 +17,8 @@ function SiteHeader({ variant = "main" }) {
         )}
         {!isLegal && (
           <nav className="nav-links">
-            <a href="#services">Services</a>
-            <a href="#repair-services">Repairs</a>
+            <a href="#services">What We Do?</a>
+            <a href="#repair-services">Services</a>
             <a href="#visit">Visit</a>
           </nav>
         )}
@@ -35,10 +35,10 @@ function SiteHeader({ variant = "main" }) {
                 target="_blank"
                 rel="noreferrer"
               >
-                Get Directions
+                Visit Us
               </a>
               <a className="btn btn-solid" href={businessInfo.tempe.phoneHref}>
-                Call to Book
+                Call Us
               </a>
             </>
           )}
