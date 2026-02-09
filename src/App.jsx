@@ -230,10 +230,10 @@ function App() {
               </p>
               <div className="hero-cta">
                 <a className="btn btn-solid" href={store.phoneHref}>
-                  Call to Book
+                  Call Us
                 </a>
                 <a className="btn btn-ghost" href={store.mapLink} target="_blank" rel="noreferrer">
-                  Direction 📍
+                  Directions 📍
                 </a>
               </div>
               {/* Display highlight badges dynamically from heroBadges array */}
