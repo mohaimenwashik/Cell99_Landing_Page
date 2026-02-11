@@ -11,8 +11,10 @@ import customerServiceIcon from "./assets/customer-service.png";
 import customerRetentionIcon from "./assets/customer-retention.png";
 import lowPriceIcon from "./assets/low-price.png";
 import localExpertIcon from "./assets/local-expert.png";
+import mapLocationFallback from "./assets/maplocation.png";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
+import { trackContactConversion } from "./utils/tracking";
 
 // ============================================================================
 // BUSINESS DATA - Store information, services, and page content
@@ -31,27 +33,29 @@ const store = {
   email: businessInfo.email
 };
 const googleStaticMapsKey = import.meta.env.VITE_GOOGLE_STATIC_MAPS_KEY;
-const mapEmbedSrc = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(
-  store.address
-)}&zoom=16&size=900x520&maptype=roadmap&markers=color:red%7C${encodeURIComponent(
-  store.address
-)}&key=${googleStaticMapsKey}`;
+const mapEmbedSrc = googleStaticMapsKey
+  ? `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(
+      store.address
+    )}&zoom=16&size=900x520&maptype=roadmap&markers=color:red%7C${encodeURIComponent(
+      store.address
+    )}&key=${googleStaticMapsKey}`
+  : mapLocationFallback;
 
 // Hero section badges - Key highlights displayed below the main heading
 const heroBadges = [
-  "Quick Cell Phone Services",
-  "Accessories for all brands and models",
-  "Walk-ins welcome", 
-  "Appointments by call"
+  "Screen fix near ASU",
+  "Walk-ins welcome",
+  "Appointments by call",
+  "Phone Cases & Accessories"
 ];
 
 // Services offered - Displayed as cards in the Services section
 // Maps over this array to create service cards dynamically
 const services = [
   {
-    title: "Broken Phone?",
+    title: "Broken Phone? We Fix It.",
     detail:
-      "Cracked screens, battery issues, charging ports, and more are fixed with ease. Call for availability and quotes."
+      "Cracked screens, battery issues, charging ports, water damage and more are fixed with ease in Tempe. Call for availability and quotes."
   },
   {
     title: "Need new case & accessories?",
@@ -139,11 +143,15 @@ const faqs = [
   },
   {
     q: "What phones do you service?",
-    a: "We service all kind of brands and many other phones sold in the US."
+    a: "We service iPhone, Samsung, Google, and many other models sold in the US."
   },
   {
     q: "Do you sell accessories for older models?",
     a: "Yes. We carry accessories for older devices and the latest releases."
+  },
+  {
+    q: "Do you offer screen fix near ASU?",
+    a: "Yes. Cell99 serves Tempe and nearby Arizona State University areas for screen replacements and common repairs."
   }
 ];
 
@@ -177,27 +185,71 @@ function App() {
       behavior: prefersReducedMotion ? "auto" : "smooth"
     });
   };
-  // JSON-LD Schema - Structured data for search engines (SEO)
-  // Helps Google understand the business type and location
-  const jsonLd = {
+  const openingHoursSpecification = [
+    { dayOfWeek: "Monday", opens: "10:00", closes: "20:00" },
+    { dayOfWeek: "Tuesday", opens: "10:00", closes: "20:00" },
+    { dayOfWeek: "Wednesday", opens: "10:00", closes: "20:00" },
+    { dayOfWeek: "Thursday", opens: "10:00", closes: "20:00" },
+    { dayOfWeek: "Friday", opens: "10:00", closes: "20:00" },
+    { dayOfWeek: "Saturday", opens: "10:00", closes: "20:00" },
+    { dayOfWeek: "Sunday", opens: "11:00", closes: "18:00" }
+  ];
+
+  const localBusinessSchema = {
     "@context": "https://schema.org",
-    "@type": ["MobilePhoneStore", "LocalBusiness"],
+    "@type": "MobilePhoneStore",
+    "@id": `${businessInfo.siteUrl}/#localbusiness`,
     name: store.name,
+    url: businessInfo.siteUrl,
+    image: `${businessInfo.siteUrl}/favicon.svg`,
     address: {
       "@type": "PostalAddress",
-      streetAddress: "1700 E Elliot Rd STE 4",
+      streetAddress: "1700 E Elliot Rd STE 3",
       addressLocality: "Tempe",
       addressRegion: "AZ",
       postalCode: "85284",
       addressCountry: "US"
     },
-    areaServed: "Tempe, AZ"
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: businessInfo.tempe.geo.latitude,
+      longitude: businessInfo.tempe.geo.longitude
+    },
+    hasMap: store.mapLink,
+    areaServed: [
+      "Tempe, AZ",
+      "Arizona State University area",
+      "South Tempe"
+    ],
+    openingHoursSpecification,
+    sameAs: [store.mapLink]
   };
 
-  // Add phone number to schema only if it's a valid phone number (not placeholder)
   if (store.phoneDisplay && !store.phoneDisplay.includes("Update")) {
-    jsonLd.telephone = store.phoneDisplay;
+    localBusinessSchema.telephone = store.phoneDisplay;
   }
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a
+      }
+    }))
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    url: businessInfo.siteUrl,
+    name: store.name
+  };
+
+  const seoSchemas = [localBusinessSchema, faqSchema, websiteSchema];
 
   // Main render output - All page content is defined here
   return (
@@ -221,19 +273,23 @@ function App() {
             <div className="hero-copy">
               <p className="eyebrow">Accessories • Walk-ins • Quick Service</p>
               <h1>
-                Highest rated in {store.city}
+                Highest rated phone solutions in Tempe, near ASU
               </h1>
               <p className="lead">
                 Cell99 keeps you connected with accessories for old to latest
-                models, plus trusted solution for your phone. Call to book an appointment, or
+                models, plus practical fixes for daily phone issues. Call to book an appointment, or
                 walk in when you’re ready.
               </p>
               <div className="hero-cta">
-                <a className="btn btn-solid" href={store.phoneHref}>
+                <a
+                  className="btn btn-solid"
+                  href={store.phoneHref}
+                  onClick={trackContactConversion}
+                >
                   Call Us
                 </a>
                 <a className="btn btn-ghost" href={store.mapLink} target="_blank" rel="noreferrer">
-                  Directions 📍
+                  Get Directions
                 </a>
               </div>
               {/* Display highlight badges dynamically from heroBadges array */}
@@ -273,7 +329,11 @@ function App() {
                 <a className="btn btn-outline" href={store.mapLink} target="_blank" rel="noreferrer">
                   Directions
                 </a>
-                <a className="btn btn-solid" href={store.phoneHref}>
+                <a
+                  className="btn btn-solid"
+                  href={store.phoneHref}
+                  onClick={trackContactConversion}
+                >
                   {store.phoneDisplay}
                 </a>
               </div>
@@ -285,7 +345,7 @@ function App() {
         </section>
 
         {/* SERVICES SECTION - Displays main service offerings */}
-        <section id="services" className="section">
+        <section id="what-we-do" className="section">
           <div className="container">
             <div className="section-header">
               <h2>Everything your phone needs</h2>
@@ -307,7 +367,7 @@ function App() {
         </section>
 
         {/* REPAIR SERVICES SECTION - Specific repair services offered */}
-        <section id="repair-services" className="section alt">
+        <section id="repair-services" className="section">
           <div className="container">
             <div className="section-header">
               <h2>Our Services Include</h2>
@@ -358,8 +418,8 @@ function App() {
               <div className="section-header">
                 <h2>Visit the store</h2>
                 <p>
-                  Stop by Cell99 in Tempe for accessories and help. Call
-                  ahead to book an appointment.
+                  Stop by Cell99 in Tempe for accessories and help. We also serve
+                  visitors searching for screen fix near ASU and nearby neighborhoods.
                 </p>
               </div>
               <div className="visit-details">
@@ -389,7 +449,11 @@ function App() {
                 </div>
               </div>
               <div className="visit-actions">
-                <a className="btn btn-solid" href={store.phoneHref}>
+                <a
+                  className="btn btn-solid"
+                  href={store.phoneHref}
+                  onClick={trackContactConversion}
+                >
                   Call Now
                 </a>
                 <a className="btn btn-outline" href={store.mapLink} target="_blank" rel="noreferrer">
@@ -458,7 +522,7 @@ function App() {
       {/* Inject JSON-LD schema for SEO - Helps search engines understand the page */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(seoSchemas) }}
       />
 
       <button

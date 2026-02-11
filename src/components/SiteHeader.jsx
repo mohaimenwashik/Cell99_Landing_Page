@@ -1,6 +1,7 @@
 import React from "react";
 import { businessInfo } from "../config";
 import cell99Logo from "../assets/Logos/Cell99_logo.svg";
+import { trackContactConversion } from "../utils/tracking";
 
 function SiteHeader({ variant = "main" }) {
   const isLegal = variant === "legal";
@@ -17,7 +18,7 @@ function SiteHeader({ variant = "main" }) {
         )}
         {!isLegal && (
           <nav className="nav-links">
-            <a href="#services">What We Do?</a>
+            <a href="#what-we-do">What we do?</a>
             <a href="#repair-services">Services</a>
             <a href="#visit">Visit</a>
           </nav>
@@ -37,7 +38,11 @@ function SiteHeader({ variant = "main" }) {
               >
                 Visit Us
               </a>
-              <a className="btn btn-solid" href={businessInfo.tempe.phoneHref}>
+              <a
+                className="btn btn-solid"
+                href={businessInfo.tempe.phoneHref}
+                onClick={trackContactConversion}
+              >
                 Call Us
               </a>
             </>

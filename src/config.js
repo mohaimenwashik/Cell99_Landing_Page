@@ -16,6 +16,7 @@
 
 export const businessInfo = {
   name: "Cell99",
+  siteUrl: "https://cell99tempe.com",
   
   // Email contact
   email: "cell99elliot@gmail.com",
@@ -27,7 +28,11 @@ export const businessInfo = {
     phoneDisplay: "+1 (602)-814-4334",
     phoneHref: "tel:+16028144334",
     city: "Tempe, AZ",
-    mapLink: "https://www.google.com/maps?ll=33.349524,-111.913772&z=15&t=m&hl=en&gl=US&mapclient=embed&cid=11293861067453886929"
+    mapLink: "https://www.google.com/maps?ll=33.349524,-111.913772&z=15&t=m&hl=en&gl=US&mapclient=embed&cid=11293861067453886929",
+    geo: {
+      latitude: 33.349524,
+      longitude: -111.913772
+    }
   },
   
   // Secondary location (Glendale) - used in legal documents

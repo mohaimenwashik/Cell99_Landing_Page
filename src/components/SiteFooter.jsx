@@ -1,6 +1,7 @@
 import React from "react";
 import { businessInfo } from "../config";
 import cell99Logo from "../assets/Logos/Cell99_logo.svg";
+import { trackContactConversion } from "../utils/tracking";
 
 function SiteFooter() {
   return (
@@ -8,7 +9,7 @@ function SiteFooter() {
       <div className="container footer-grid">
         <div>
           <img src={cell99Logo} alt="Cell99" className="logo footer-logo" />
-          <p>Phone accessories and services in Tempe, AZ.</p>
+          <p>Phone solutions, fixes, and accessories in Tempe, AZ near ASU.</p>
         </div>
         <div>
           <h4>Visit</h4>
@@ -29,7 +30,7 @@ function SiteFooter() {
         <div>
           <h4>Contact</h4>
           <p>
-            <a href={businessInfo.tempe.phoneHref}>
+            <a href={businessInfo.tempe.phoneHref} onClick={trackContactConversion}>
               {businessInfo.tempe.phoneDisplay}
             </a>
           </p>
